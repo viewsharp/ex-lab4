@@ -6,10 +6,7 @@ from librip.decorators import print_result
 from librip.gens import field, gen_random
 from librip.iterators import Unique as unique
 
-path = None
-
-# Здесь необходимо в переменную path получить
-# путь до файла, который был передан при запуске
+path = sys.argv[1]
 
 with open(path) as f:
     data = json.load(f)
@@ -23,22 +20,23 @@ with open(path) as f:
 
 @print_result
 def f1(arg):
-    raise NotImplemented
+    return list(field(arg, 'job-name'))
 
 
 @print_result
 def f2(arg):
-    raise NotImplemented
+    return filter(lambda line: line.lower().find('программист') != -1, arg)
 
 
 @print_result
 def f3(arg):
-    raise NotImplemented
+    return list(map(lambda line: line + ' с опытом Python', arg))
 
 
 @print_result
 def f4(arg):
-    raise NotImplemented
+    items = zip(arg, gen_random(100000, 200000, len(arg)))
+    return ['{0}, зарплата {1} руб.'.format(item[0], item[1]) for item in items]
 
 
 with timer():

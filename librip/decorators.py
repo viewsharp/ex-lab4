@@ -35,3 +35,23 @@
 # test_4
 # 1
 # 2
+
+
+def print_result(func):
+    name = func.__name__
+
+    def result(*args, **kwargs):
+        print(name)
+        func_result = func(*args, **kwargs)
+        if type(func_result) is list:
+            for item in func_result:
+                print(item)
+
+        elif type(func_result) is dict:
+            for key, value in func_result.items():
+                print(key, value, sep=' = ')
+
+        else:
+            print(func_result)
+        return func_result
+    return result
